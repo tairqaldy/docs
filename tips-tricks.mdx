@@ -1,0 +1,59 @@
+---
+title: "Tips & Tricks"
+description: "Advanced tips and best practices for using CodeArchitect MCP effectively"
+---
+
+## Best Practices
+
+**Use descriptive topics:**
+```
+Store this session with topic "Database Migration Strategy"
+```
+
+**Per-project configuration:**
+```json
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "codearchitect-mcp",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
+      }
+    }
+  }
+}
+```
+
+**Version control sessions:**
+```bash
+git add .codearchitect/sessions/
+git commit -m "Add architecture discussion sessions"
+```
+
+## Search Sessions
+
+```bash
+# Search by content
+grep -r "authentication" .codearchitect/sessions/
+
+# Find by date
+find .codearchitect/sessions/2025-11-* -name "*.md"
+```
+
+## Custom Storage
+
+Set global location via environment variable:
+```json
+{
+  "env": {
+    "CODEARCHITECT_SESSIONS_DIR": "/Users/YourName/Documents/ai-sessions"
+  }
+}
+```
+
+## Topic Tips
+
+- Start conversations with clear user messages
+- Use descriptive language
+- Avoid code blocks in first 100 characters

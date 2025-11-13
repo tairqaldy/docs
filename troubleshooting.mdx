@@ -1,0 +1,57 @@
+---
+title: "Troubleshooting"
+description: "Common issues and solutions for CodeArchitect MCP"
+---
+
+## Sessions saved in wrong location
+
+**Fix:** Use workspace-specific configuration in your project root:
+
+```json .cursor/mcp.json
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "codearchitect-mcp",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
+      }
+    }
+  }
+}
+```
+
+Restart your IDE. Ensure project has a marker file (`package.json`, `.git`, etc.).
+
+## Session files not being created
+
+**Check:**
+- Write permissions: `chmod -R u+w .codearchitect/` (Linux/Mac)
+- MCP server logs in IDE Output panel
+- Project root detection (`.codearchitect` folder should exist)
+
+## MCP server not starting
+
+**Verify:**
+```bash
+codearchitect-mcp --version  # Should show version
+node --version              # Should be v18+
+```
+
+If missing, reinstall: `npm install -g codearchitect-mcp`
+
+## Topic extraction issues
+
+Provide explicit `topic` parameter. Topics are limited to 50 characters.
+
+## Permission errors
+
+**Linux/Mac:** `chmod -R u+w .codearchitect/`  
+**Windows:** Check folder Properties → Security → Write permissions
+
+## Getting Help
+
+- [GitHub Issues](https://github.com/tairqaldy/codearchitect-mcp/issues)
+- [Telegram](https://t.me/tairqaldy)
+
+Include: description, steps to reproduce, environment (OS, Node version, IDE), and MCP server logs.

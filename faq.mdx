@@ -1,0 +1,59 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about CodeArchitect MCP"
+---
+
+## Why Use CodeArchitect MCP?
+
+Saves AI conversations as searchable markdown files. Prevents losing important architectural discussions.
+
+**Benefits:**
+- Preserve knowledge as markdown files
+- Auto-organized by date
+- Searchable with grep/IDE/git
+- Zero configuration
+
+## How It Works
+
+**MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `store_session` tool.
+
+**Storage:** Sessions saved to `.codearchitect/sessions/YYYY-MM-DD/` in your project root.
+
+**Topic Extraction:** Auto-extracts topics from conversation (or use explicit topic parameter).
+
+## Usage
+
+Just ask your AI: "Store this conversation about [topic]"
+
+**Parameters:**
+- `conversation` (required): Conversation text or messages array
+- `topic` (optional): Session title
+- `format`: "plain" or "messages" (default: "plain")
+- `sessionsDir` (optional): Custom directory
+
+## Where Are Sessions Stored?
+
+Default: `<project-root>/.codearchitect/sessions/YYYY-MM-DD/`
+
+**Custom location:** Set `CODEARCHITECT_SESSIONS_DIR` env var or use `sessionsDir` parameter.
+
+## Finding Sessions
+
+Sessions are markdown files:
+- Browse: `.codearchitect/sessions/`
+- Search: `grep -r "keyword" .codearchitect/sessions/`
+- Git: Commit sessions for version control
+
+## Technical
+
+**Tech Stack:** TypeScript, Node.js 18+, MCP SDK
+
+**License:** CC-BY-NC-4.0 (free for non-commercial use)
+
+**Status:** Production-ready. Actively developed.
+
+## Getting Help
+
+- [Troubleshooting](/troubleshooting)
+- [GitHub Issues](https://github.com/tairqaldy/codearchitect-mcp/issues)
+- [Telegram](https://t.me/tairqaldy)

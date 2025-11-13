@@ -1,33 +1,51 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Reference"
+description: "Complete API documentation for CodeArchitect MCP tools"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Available Tools
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
+<CardGroup cols={2}>
+<Card title="store_session" icon="floppy-disk" href="/api-reference/store-session">
+  Store AI conversation sessions
 </Card>
 
-## Authentication
+<Card title="list_sessions" icon="list">
+  Browse sessions (Coming Soon)
+</Card>
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+<Card title="get_session" icon="file-lines">
+  Retrieve session (Coming Soon)
+</Card>
 
+<Card title="search_sessions" icon="magnifying-glass">
+  Full-text search (Coming Soon)
+</Card>
+</CardGroup>
+
+## Format
+
+All tools follow MCP standard:
+- **Request**: JSON-RPC 2.0
+- **Response**: Structured JSON with success/error
+- **Auth**: None required (local only)
+
+## Response Format
+
+**Success:**
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "success": true,
+  "data": { ... },
+  "message": "Operation completed"
+}
+```
+
+**Error:**
+```json
+{
+  "success": false,
+  "error": "ERROR_CODE",
+  "message": "Error description"
+}
 ```

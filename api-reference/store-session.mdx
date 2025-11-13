@@ -1,0 +1,118 @@
+---
+title: "store_session"
+description: "Store AI conversation sessions as organized markdown files"
+---
+
+Store AI conversation sessions as organized markdown files in `.codearchitect/sessions/`.
+
+## Parameters
+
+<ParamField body="conversation" type="string | Message[]" required>
+Conversation text or JSON array of messages. Required.
+</ParamField>
+
+<ParamField body="topic" type="string">
+Optional session topic. Auto-extracted if not provided.
+</ParamField>
+
+<ParamField body="format" type="string" default="plain">
+`"plain"` for text, `"messages"` for JSON array. Default: `"plain"`.
+</ParamField>
+
+<ParamField body="sessionsDir" type="string">
+Optional custom directory. Overrides `CODEARCHITECT_SESSIONS_DIR` env var.
+</ParamField>
+
+## Response
+
+### Success
+
+<ResponseField name="success" type="boolean" required>
+Always `true`.
+</ResponseField>
+
+<ResponseField name="file" type="string" required>
+Full path to saved markdown file.
+</ResponseField>
+
+<ResponseField name="filename" type="string" required>
+Filename (e.g., `session-20251111-143022-topic.md`).
+</ResponseField>
+
+<ResponseField name="topic" type="string" required>
+Final topic used.
+</ResponseField>
+
+<ResponseField name="date" type="string" required>
+ISO date string.
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+Success message.
+</ResponseField>
+
+<ResponseField name="warning" type="string">
+Optional warning (e.g., "Conversation truncated to 1MB").
+</ResponseField>
+
+### Error
+
+<ResponseField name="success" type="boolean" required>
+Always `false`.
+</ResponseField>
+
+<ResponseField name="error" type="string" required>
+Error code (see below).
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+Human-readable error message.
+</ResponseField>
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| `INVALID_INPUT` | Missing or invalid conversation |
+| `FILE_WRITE_ERROR` | Cannot write file |
+| `DIRECTORY_CREATION_ERROR` | Cannot create directory |
+| `UNKNOWN_ERROR` | Unexpected error |
+
+## Example
+
+<RequestExample>
+```json
+{
+  "name": "store_session",
+  "arguments": {
+    "conversation": "User: Implement authentication\nAI: Let's use JWT...",
+    "topic": "Authentication Implementation"
+  }
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
+  "filename": "session-20250115-143022-authentication-implementation.md",
+  "topic": "authentication-implementation",
+  "date": "2025-01-15T14:30:22.123Z",
+  "message": "Session saved to session-20250115-143022-authentication-implementation.md"
+}
+```
+</ResponseExample>
+
+## Limits
+
+- **Conversation size**: Max 10MB (truncated to 1MB)
+- **Topic length**: Max 100 chars (50 in filename)
+- **File collisions**: Auto-numbered up to 1000 attempts
+
+## Storage Priority
+
+1. Tool parameter (`sessionsDir`)
+2. Environment variable (`CODEARCHITECT_SESSIONS_DIR`)
+3. Default (`.codearchitect/sessions/` in project root)

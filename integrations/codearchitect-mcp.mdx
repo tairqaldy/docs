@@ -1,0 +1,167 @@
+---
+title: "Installation"
+description: "Install CodeArchitect MCP and configure it for your coding agent"
+---
+
+## Prerequisites
+
+- **Node.js** v18+ and **npm**
+- An IDE with MCP support
+
+## Install
+
+```bash
+npm install -g codearchitect-mcp
+```
+
+## Configuration by Coding Agent
+
+<Tabs>
+<Tab title="Cursor">
+
+**1. Open MCP Configuration**
+
+Open your Cursor MCP configuration file:
+- **macOS**: `~/.cursor/mcp.json`
+- **Windows**: `%APPDATA%\Cursor\mcp.json`
+- **Linux**: `~/.config/cursor/mcp.json`
+
+**2. Add CodeArchitect Configuration**
+
+<CodeGroup>
+```json Option A: Manual Setup
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "codearchitect-mcp",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
+      }
+    }
+  }
+}
+```
+
+```bash Option B: Automated Setup (macOS/Linux)
+curl -fsSL https://raw.githubusercontent.com/tairqaldy/codearchitect-mcp/main/docs/scripts/setup-cursor.sh | bash
+```
+
+```powershell Option B: Automated Setup (Windows)
+irm https://raw.githubusercontent.com/tairqaldy/codearchitect-mcp/main/docs/scripts/setup-cursor.ps1 | iex
+```
+</CodeGroup>
+
+**3. Enable the server**
+
+Go to **Settings → MCP & Tools**, find `codearchitect`, and toggle it ON. Restart Cursor.
+
+</Tab>
+
+<Tab title="VS Code">
+
+**1. Open MCP Configuration**
+
+Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) → `MCP: Add Server...`
+
+**2. Add CodeArchitect Configuration**
+
+- Select **"Download with npm package"**
+- Enter `codearchitect-mcp`
+- Use defaults for all prompts
+
+**Done!** The MCP server is ready to use.
+
+</Tab>
+
+<Tab title="Claude Desktop">
+
+**1. Open MCP Configuration**
+
+Open the configuration file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**2. Add CodeArchitect Configuration**
+
+```json
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "codearchitect-mcp",
+      "env": {
+        "CODEARCHITECT_SESSIONS_DIR": "/path/to/your/sessions"
+      }
+    }
+  }
+}
+```
+
+**3. Restart Claude Desktop**
+
+</Tab>
+
+<Tab title="Windsurf">
+
+**1. Open MCP Configuration**
+
+Go to **Settings → MCP Servers**
+
+**2. Add CodeArchitect Configuration**
+
+- **Name**: `codearchitect`
+- **Command**: `codearchitect-mcp`
+- **Working Directory**: `${workspaceFolder}`
+- **Environment**: `CODEARCHITECT_SESSIONS_DIR` = `${workspaceFolder}/.codearchitect/sessions`
+
+**3. Save and restart** Windsurf
+
+</Tab>
+
+<Tab title="Continue.dev">
+
+**1. Open MCP Configuration**
+
+Go to **Settings → MCP Servers**
+
+**2. Add CodeArchitect Configuration**
+
+```json
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "codearchitect-mcp",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
+      }
+    }
+  }
+}
+```
+
+**3. Reload Continue**
+
+</Tab>
+
+<Tab title="Cline">
+
+**1. Open MCP Configuration**
+
+Go to **Configuration → MCP Settings**
+
+**2. Add CodeArchitect Configuration**
+
+- **Server ID**: `codearchitect`
+- **Command**: `codearchitect-mcp`
+- **Working Directory**: `${workspaceFolder}`
+- **Environment**: `CODEARCHITECT_SESSIONS_DIR` = `${workspaceFolder}/.codearchitect/sessions`
+
+**3. Restart Cline**
+
+</Tab>
+</Tabs>
+
+## Verify
+
+Check that `store_session` appears in your IDE's available tools list. See [Troubleshooting](/troubleshooting) if issues occur.
