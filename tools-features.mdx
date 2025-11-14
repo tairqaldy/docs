@@ -21,11 +21,32 @@ Store this conversation about implementing authentication
 
 See [API Reference](/api-reference/store-session) for details.
 
+### get_session
+
+Retrieve stored AI conversation sessions with TOON format support.
+
+**Features:**
+- Get specific session by filename
+- List all sessions (optionally filtered by date)
+- **~40% token reduction** with TOON format
+- Automatic format selection (`auto` mode)
+- Support for limiting results
+
+**Usage:**
+```
+Get session session-20250115-143022-authentication-implementation.md
+```
+
+```
+List all sessions from 2025-01-15
+```
+
+See [API Reference](/api-reference/get-session) for details.
+
 ## Coming Soon
 
 ### Session Management
-- `list_sessions` - Browse and filter sessions
-- `get_session` - Retrieve specific sessions
+- `list_sessions` - Browse and filter sessions (use `get_session` without filename for now)
 - `search_sessions` - Full-text search
 - `delete_session` - Remove sessions
 - `export_sessions` - Export in various formats

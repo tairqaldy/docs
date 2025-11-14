@@ -1,0 +1,233 @@
+---
+title: "get_session"
+description: "Retrieve stored AI conversation sessions with TOON format support for ~40% token reduction"
+---
+
+Retrieve stored AI conversation sessions. Supports TOON format for ~40% token reduction when sending to LLMs.
+
+## Parameters
+
+<ParamField body="filename" type="string">
+Optional. Specific session filename to retrieve. If not provided, lists all sessions.
+</ParamField>
+
+<ParamField body="date" type="string">
+Optional. Filter sessions by date (YYYY-MM-DD format). Only used when listing sessions.
+</ParamField>
+
+<ParamField body="format" type="string" default="auto">
+Output format: `"json"` for JSON, `"toon"` for TOON format (~40% token reduction), `"auto"` to automatically choose best format. Default: `"auto"`.
+</ParamField>
+
+<ParamField body="limit" type="number">
+Optional. Limit number of sessions returned when listing. Default: no limit.
+</ParamField>
+
+<ParamField body="sessionsDir" type="string">
+Optional custom directory. Overrides `CODEARCHITECT_SESSIONS_DIR` env var.
+</ParamField>
+
+## Response
+
+### Get Specific Session
+
+<ResponseField name="success" type="boolean" required>
+Always `true` on success.
+</ResponseField>
+
+<ResponseField name="session" type="object" required>
+Session object with content.
+</ResponseField>
+
+<ResponseField name="session.filename" type="string" required>
+Session filename.
+</ResponseField>
+
+<ResponseField name="session.topic" type="string" required>
+Session topic.
+</ResponseField>
+
+<ResponseField name="session.date" type="string" required>
+ISO date string.
+</ResponseField>
+
+<ResponseField name="session.file" type="string" required>
+Full path to session file.
+</ResponseField>
+
+<ResponseField name="session.content" type="string" required>
+Session content (markdown format).
+</ResponseField>
+
+<ResponseField name="session.messages" type="Message[]">
+Parsed messages array (if format is 'messages').
+</ResponseField>
+
+<ResponseField name="session.format" type="string">
+Format used: `"json"` or `"toon"`.
+</ResponseField>
+
+### List Sessions
+
+<ResponseField name="success" type="boolean" required>
+Always `true` on success.
+</ResponseField>
+
+<ResponseField name="sessions" type="SessionInfo[]" required>
+Array of session metadata.
+</ResponseField>
+
+<ResponseField name="sessions[].filename" type="string" required>
+Session filename.
+</ResponseField>
+
+<ResponseField name="sessions[].topic" type="string" required>
+Session topic.
+</ResponseField>
+
+<ResponseField name="sessions[].date" type="string" required>
+ISO date string.
+</ResponseField>
+
+<ResponseField name="sessions[].file" type="string" required>
+Full path to session file.
+</ResponseField>
+
+<ResponseField name="sessions[].size" type="number">
+File size in bytes.
+</ResponseField>
+
+<ResponseField name="count" type="number" required>
+Total number of sessions returned.
+</ResponseField>
+
+<ResponseField name="format" type="string">
+Format used: `"json"` or `"toon"`.
+</ResponseField>
+
+### Error
+
+<ResponseField name="success" type="boolean" required>
+Always `false`.
+</ResponseField>
+
+<ResponseField name="error" type="string" required>
+Error code (see below).
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+Human-readable error message.
+</ResponseField>
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| `FILE_NOT_FOUND` | Session file not found |
+| `INVALID_DATE` | Invalid date format |
+| `READ_ERROR` | Cannot read session file |
+| `PARSE_ERROR` | Cannot parse session file |
+| `UNKNOWN_ERROR` | Unexpected error |
+
+## Examples
+
+### Get Specific Session
+
+<RequestExample>
+```json
+{
+  "name": "get_session",
+  "arguments": {
+    "filename": "session-20250115-143022-authentication-implementation.md",
+    "format": "auto"
+  }
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "session": {
+    "filename": "session-20250115-143022-authentication-implementation.md",
+    "topic": "authentication-implementation",
+    "date": "2025-01-15T14:30:22.123Z",
+    "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
+    "content": "# authentication-implementation\n\nUser: Implement authentication\nAI: Let's use JWT...",
+    "format": "toon"
+  }
+}
+```
+</ResponseExample>
+
+### List All Sessions
+
+<RequestExample>
+```json
+{
+  "name": "get_session",
+  "arguments": {
+    "format": "auto",
+    "limit": 10
+  }
+}
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "sessions": [
+    {
+      "filename": "session-20250115-143022-authentication-implementation.md",
+      "topic": "authentication-implementation",
+      "date": "2025-01-15T14:30:22.123Z",
+      "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
+      "size": 2048
+    }
+  ],
+  "count": 1,
+  "format": "toon"
+}
+```
+</ResponseExample>
+
+### List Sessions by Date
+
+<RequestExample>
+```json
+{
+  "name": "get_session",
+  "arguments": {
+    "date": "2025-01-15",
+    "format": "json"
+  }
+}
+```
+</RequestExample>
+
+## TOON Format
+
+The `get_session` tool supports **TOON (Token-Oriented Object Notation)** format, which provides **~40% token reduction** compared to JSON for uniform data structures like message arrays and session lists.
+
+### When TOON is Used
+
+- **Automatic (`auto`)**: TOON is used when data is uniform (e.g., arrays of messages with same structure)
+- **Manual (`toon`)**: Force TOON format (may fallback to JSON if data isn't uniform)
+- **JSON (`json`)**: Always use JSON format
+
+### Benefits
+
+- **~40% token reduction** for uniform data structures
+- **Lower API costs** when sending to LLMs
+- **Faster processing** with fewer tokens
+- **Automatic fallback** to JSON for non-uniform data
+
+## Storage Priority
+
+1. Tool parameter (`sessionsDir`)
+2. Environment variable (`CODEARCHITECT_SESSIONS_DIR`)
+3. Default (`.codearchitect/sessions/` in project root)
+

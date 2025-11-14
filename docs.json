@@ -57,7 +57,8 @@
             "group": "API Documentation",
             "pages": [
               "api-reference/introduction",
-              "api-reference/store-session"
+              "api-reference/store-session",
+              "api-reference/get-session"
             ]
           }
         ]

@@ -49,4 +49,38 @@ Captures setup steps, configuration, and troubleshooting tips.
 Save this session about implementing GraphQL API
 ```
 
-Onboards new members and documents patterns and practices.
+## Retrieving Sessions
+
+### Get Specific Session
+
+```
+Get session session-20250115-143022-authentication-implementation.md
+```
+
+Retrieves a specific session with optimized format for LLM consumption.
+
+### List Recent Sessions
+
+```
+List all sessions from 2025-01-15
+```
+
+Lists all sessions from a specific date, useful for reviewing daily work.
+
+### Review Architecture Decisions
+
+```
+Get session session-20250115-143022-microservices-architecture.md
+```
+
+Retrieves stored architecture discussions for reference during design work.
+
+## Token Optimization
+
+The `get_session` tool automatically uses TOON format when retrieving sessions, providing ~40% token reduction when sending to LLMs:
+
+```
+Get session session-20250115-143022-authentication-implementation.md with format auto
+```
+
+This reduces API costs and improves response times when working with large conversation histories.

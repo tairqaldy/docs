@@ -15,21 +15,27 @@ Saves AI conversations as searchable markdown files. Prevents losing important a
 
 ## How It Works
 
-**MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `store_session` tool.
+**MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `store_session` and `get_session` tools.
 
 **Storage:** Sessions saved to `.codearchitect/sessions/YYYY-MM-DD/` in your project root.
 
 **Topic Extraction:** Auto-extracts topics from conversation (or use explicit topic parameter).
 
+**Token Optimization:** `get_session` supports TOON format for ~40% token reduction when sending to LLMs.
+
 ## Usage
 
+**Store Session:**
 Just ask your AI: "Store this conversation about [topic]"
 
+**Get Session:**
+- "Get session [filename]" - Retrieve specific session
+- "List all sessions" - List all stored sessions
+- "List sessions from 2025-01-15" - Filter by date
+
 **Parameters:**
-- `conversation` (required): Conversation text or messages array
-- `topic` (optional): Session title
-- `format`: "plain" or "messages" (default: "plain")
-- `sessionsDir` (optional): Custom directory
+- `store_session`: `conversation` (required), `topic` (optional), `format` ("plain" or "messages"), `sessionsDir` (optional)
+- `get_session`: `filename` (optional), `date` (optional), `format` ("json", "toon", or "auto"), `limit` (optional), `sessionsDir` (optional)
 
 ## Where Are Sessions Stored?
 
