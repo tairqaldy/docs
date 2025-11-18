@@ -3,18 +3,35 @@ title: "Example Workflows"
 description: "Real-world examples and workflows for using CodeArchitect MCP"
 ---
 
+## Getting Started
+
+**First time?** Just ask:
+
+```
+use codearchitect
+```
+
+This shows you all available features and how to use them. No memorization needed!
+
 ## System Design
 
 ```
-Store this conversation about designing our microservices architecture
+use codearchitect store_session "microservices architecture design"
 ```
 
-Saves architecture decisions, trade-offs, and technology choices.
+Saves architecture decisions, trade-offs, and technology choices in a readable folder structure:
+
+```
+.codearchitect/sessions/2025-11-18/
+└── microservices-architecture-design/
+    ├── summary.md    # Quick overview + key decisions
+    └── full.md       # Complete conversation
+```
 
 ## Code Review
 
 ```
-Save this code review session about implementing authentication
+use codearchitect store_session "authentication code review"
 ```
 
 Documents review feedback, improvements, and best practices.
@@ -22,7 +39,7 @@ Documents review feedback, improvements, and best practices.
 ## Debugging
 
 ```
-Store this debugging conversation about database performance issues
+use codearchitect store_session "database performance debugging"
 ```
 
 Builds a troubleshooting knowledge base for future reference.
@@ -30,7 +47,7 @@ Builds a troubleshooting knowledge base for future reference.
 ## Architecture Decisions
 
 ```
-Save this session with topic "ADR: Choosing PostgreSQL over MongoDB"
+use codearchitect store_session "ADR: Choosing PostgreSQL over MongoDB"
 ```
 
 Tracks decision context, options, rationale, and consequences.
@@ -38,7 +55,7 @@ Tracks decision context, options, rationale, and consequences.
 ## Development Workflow
 
 ```
-Store this conversation about setting up CI/CD pipeline
+use codearchitect store_session "CI/CD pipeline setup"
 ```
 
 Captures setup steps, configuration, and troubleshooting tips.
@@ -46,41 +63,77 @@ Captures setup steps, configuration, and troubleshooting tips.
 ## Team Knowledge Sharing
 
 ```
-Save this session about implementing GraphQL API
+use codearchitect store_session "GraphQL API implementation"
 ```
 
 ## Retrieving Sessions
 
+### Get Help First
+
+```
+use codearchitect get_session
+```
+
+Shows you how to retrieve sessions and lists available options.
+
 ### Get Specific Session
 
 ```
-Get session session-20250115-143022-authentication-implementation.md
+use codearchitect get_session authentication-implementation
 ```
 
-Retrieves a specific session with optimized format for LLM consumption.
+Retrieves a specific session by folder name with optimized format for LLM consumption.
 
 ### List Recent Sessions
 
 ```
-List all sessions from 2025-01-15
+use codearchitect get_session 2025-11-18
 ```
 
 Lists all sessions from a specific date, useful for reviewing daily work.
 
+### List All Sessions
+
+```
+use codearchitect get_session
+```
+
+Lists all available sessions across all dates.
+
 ### Review Architecture Decisions
 
 ```
-Get session session-20250115-143022-microservices-architecture.md
+use codearchitect get_session microservices-architecture-design
 ```
 
 Retrieves stored architecture discussions for reference during design work.
+
+## Folder Structure
+
+Sessions are organized in readable topic folders:
+
+```
+your-project/
+└── .codearchitect/
+    └── sessions/
+        └── 2025-11-18/
+            ├── authentication-implementation/
+            │   ├── summary.md    # Quick summary + key points
+            │   └── full.md       # Complete conversation (JSON + readable)
+            ├── database-migration/
+            │   ├── summary.md
+            │   └── full.md
+            └── microservices-architecture-design/
+                ├── summary.md
+                └── full.md
+```
 
 ## Token Optimization
 
 The `get_session` tool automatically uses TOON format when retrieving sessions, providing ~40% token reduction when sending to LLMs:
 
 ```
-Get session session-20250115-143022-authentication-implementation.md with format auto
+use codearchitect get_session authentication-implementation
 ```
 
 This reduces API costs and improves response times when working with large conversation histories.

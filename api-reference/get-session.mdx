@@ -8,7 +8,7 @@ Retrieve stored AI conversation sessions. Supports TOON format for ~40% token re
 ## Parameters
 
 <ParamField body="filename" type="string">
-Optional. Specific session filename to retrieve. If not provided, lists all sessions.
+Optional. Specific session folder name (e.g., `authentication-implementation`) or filename to retrieve. If not provided, lists all sessions.
 </ParamField>
 
 <ParamField body="date" type="string">
@@ -40,7 +40,7 @@ Session object with content.
 </ResponseField>
 
 <ResponseField name="session.filename" type="string" required>
-Session filename.
+Session folder name (e.g., `authentication-implementation`).
 </ResponseField>
 
 <ResponseField name="session.topic" type="string" required>
@@ -52,7 +52,7 @@ ISO date string.
 </ResponseField>
 
 <ResponseField name="session.file" type="string" required>
-Full path to session file.
+Full path to session file (prefers `full.md` when available).
 </ResponseField>
 
 <ResponseField name="session.content" type="string" required>
@@ -78,7 +78,7 @@ Array of session metadata.
 </ResponseField>
 
 <ResponseField name="sessions[].filename" type="string" required>
-Session filename.
+Session folder name (e.g., `authentication-implementation`).
 </ResponseField>
 
 <ResponseField name="sessions[].topic" type="string" required>
@@ -90,7 +90,7 @@ ISO date string.
 </ResponseField>
 
 <ResponseField name="sessions[].file" type="string" required>
-Full path to session file.
+Full path to session file (prefers `full.md` when available).
 </ResponseField>
 
 <ResponseField name="sessions[].size" type="number">
@@ -138,7 +138,7 @@ Human-readable error message.
 {
   "name": "get_session",
   "arguments": {
-    "filename": "session-20250115-143022-authentication-implementation.md",
+    "filename": "authentication-implementation",
     "format": "auto"
   }
 }
@@ -150,11 +150,12 @@ Human-readable error message.
 {
   "success": true,
   "session": {
-    "filename": "session-20250115-143022-authentication-implementation.md",
+    "filename": "authentication-implementation",
     "topic": "authentication-implementation",
-    "date": "2025-01-15T14:30:22.123Z",
-    "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
-    "content": "# authentication-implementation\n\nUser: Implement authentication\nAI: Let's use JWT...",
+    "date": "2025-11-18T14:30:22.123Z",
+    "file": "/path/.codearchitect/sessions/2025-11-18/authentication-implementation/full.md",
+    "content": "messages[5\t]{role\tcontent}:...",
+    "messages": [{"role": "user", "content": "..."}, ...],
     "format": "toon"
   }
 }
@@ -181,10 +182,10 @@ Human-readable error message.
   "success": true,
   "sessions": [
     {
-      "filename": "session-20250115-143022-authentication-implementation.md",
+      "filename": "authentication-implementation",
       "topic": "authentication-implementation",
-      "date": "2025-01-15T14:30:22.123Z",
-      "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
+      "date": "2025-11-18",
+      "file": "/path/.codearchitect/sessions/2025-11-18/authentication-implementation/full.md",
       "size": 2048
     }
   ],
@@ -201,7 +202,7 @@ Human-readable error message.
 {
   "name": "get_session",
   "arguments": {
-    "date": "2025-01-15",
+    "date": "2025-11-18",
     "format": "json"
   }
 }
@@ -224,6 +225,17 @@ The `get_session` tool supports **TOON (Token-Oriented Object Notation)** format
 - **Lower API costs** when sending to LLMs
 - **Faster processing** with fewer tokens
 - **Automatic fallback** to JSON for non-uniform data
+
+## Session Retrieval
+
+**Folder-based sessions (v0.1.5+):**
+- Sessions are stored in topic-named folders with `summary.md` and `full.md`
+- When retrieving by folder name (without suffix), system automatically prefers `full.md` for complete context
+- You can also specify `-summary.md` or `-full.md` explicitly if needed
+
+**Backward compatibility:**
+- System automatically handles both old flat-file format and new folder-based format
+- Old sessions are still accessible and will be listed correctly
 
 ## Storage Priority
 

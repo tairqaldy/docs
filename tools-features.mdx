@@ -3,20 +3,46 @@ title: "Tools & Features"
 description: "Explore all available tools and capabilities in CodeArchitect MCP"
 ---
 
-## Current Tools
+## Current Tools (v0.1.5)
+
+### codearchitect_help
+
+Discover available features and get usage guidance. **Start here!**
+
+**Features:**
+- Lists all available features with descriptions
+- Shows usage patterns and examples
+- Provides when-to-use guidance
+- Feature-specific help available
+
+**Usage:**
+```
+use codearchitect
+```
+
+```
+use codearchitect store_session
+```
+
+See [API Reference](/api-reference/codearchitect-help) for details.
 
 ### store_session
 
-Save AI conversation sessions as organized markdown files.
+Save AI conversation sessions as organized markdown files in topic-named folders.
 
 **Features:**
-- Auto-organization by date (`.codearchitect/sessions/YYYY-MM-DD/`)
-- Smart topic extraction
+- Auto-organization by date (`.codearchitect/sessions/YYYY-MM-DD/topic-folder/`)
+- Topic-named folders with `summary.md` and `full.md` files
+- Smart topic extraction with redundant suffix removal
 - Zero configuration (auto-detects project root)
 
 **Usage:**
 ```
-Store this conversation about implementing authentication
+use codearchitect store_session
+```
+
+```
+use codearchitect store_session "authentication implementation"
 ```
 
 See [API Reference](/api-reference/store-session) for details.
@@ -26,19 +52,24 @@ See [API Reference](/api-reference/store-session) for details.
 Retrieve stored AI conversation sessions with TOON format support.
 
 **Features:**
-- Get specific session by filename
+- Get specific session by folder name (e.g., `authentication-implementation`)
 - List all sessions (optionally filtered by date)
 - **~40% token reduction** with TOON format
 - Automatic format selection (`auto` mode)
 - Support for limiting results
+- Handles both folder-based (v0.1.5+) and legacy flat-file formats
 
 **Usage:**
 ```
-Get session session-20250115-143022-authentication-implementation.md
+use codearchitect get_session
 ```
 
 ```
-List all sessions from 2025-01-15
+use codearchitect get_session authentication-implementation
+```
+
+```
+use codearchitect get_session 2025-11-18
 ```
 
 See [API Reference](/api-reference/get-session) for details.

@@ -1,9 +1,9 @@
 ---
-title: "CodeArchitect MCP"
+title: "Docs"
 description: "Never let AI ruin your codebase again - Context augmentation for agents"
 ---
 
-CodeArchitect MCP gives coding agents deep system design intelligence. It reduces AI hallucinations by providing agents with structured chat storage and workflow assistance, improving most coding agents' capabilities by at least 40%.
+CodeArchitect MCP gives coding agents deep system design intelligence. It increases context window and reduces AI hallucinations by providing agents with structured chat storage and workflow assistance, decreasing token usage of most coding agents by at least 40%.
 
 <Card
   title="Get Started"
@@ -13,6 +13,60 @@ CodeArchitect MCP gives coding agents deep system design intelligence. It reduce
 >
   Install CodeArchitect MCP and configure it for your coding agent in minutes.
 </Card>
+
+## Start Using CodeArchitect - It's That Easy!
+
+After installation, simply ask your AI assistant:
+
+```
+use codearchitect
+```
+
+This will show you all available features and how to use them. **That's it!** No complex commands to remember.
+
+### Example Prompts
+
+**Get help:**
+```
+use codearchitect
+```
+
+**Save a conversation:**
+```
+use codearchitect store_session
+```
+
+**Save with a specific topic:**
+```
+use codearchitect store_session "authentication implementation"
+```
+
+**Retrieve a saved session:**
+```
+use codearchitect get_session
+```
+
+**Get a specific session:**
+```
+use codearchitect get_session authentication-implementation
+```
+
+### Folder Structure
+
+Sessions are automatically organized in readable folders:
+
+```
+your-project/
+└── .codearchitect/
+    └── sessions/
+        └── 2025-11-18/
+            ├── authentication-implementation/
+            │   ├── summary.md          # Quick summary + key points
+            │   └── full.md             # Complete conversation
+            └── database-migration/
+                ├── summary.md
+                └── full.md
+```
 
 ## Why CodeArchitect MCP?
 
@@ -24,7 +78,7 @@ Solves the problem of **losing valuable AI conversations**. Important discussion
 </Card>
 
 <Card title="Organize Thoughts" icon="folder-tree">
-  Auto-organized by date and topic
+  Auto-organized by date and topic folders
 </Card>
 
 <Card title="Searchable" icon="magnifying-glass">
@@ -53,21 +107,25 @@ See [Installation Guide](/integrations/codearchitect-mcp) for your IDE (Cursor, 
 
 </Step>
 
-<Step title="Use">
+<Step title="Start Using">
 
+Just say:
 ```
-Store this conversation about implementing authentication
+use codearchitect
 ```
+
+Your AI assistant will show you everything you can do!
 
 </Step>
 </Steps>
 
-## Current Features
+## Current Features (v0.1.5)
 
-- ✅ **Session Storage** - Save AI conversations as organized markdown files
+- ✅ **`codearchitect_help`** - Discover available features with `use codearchitect`
+- ✅ **Session Storage** - Save AI conversations in topic-named folders (summary.md + full.md)
 - ✅ **Session Retrieval** - Get and list stored sessions with TOON format support (~40% token reduction)
-- ✅ **Auto-Organization** - Organized by date automatically
-- ✅ **Smart Topics** - Extracts topics from conversations
+- ✅ **Auto-Organization** - Organized by date in readable topic folders
+- ✅ **Smart Topics** - Extracts topics from conversations with redundant suffix removal
 - ✅ **Zero Configuration** - Auto-detects project roots
 - ✅ **Token Optimization** - TOON format reduces token usage by ~40% for LLM interactions
 

@@ -15,40 +15,55 @@ Saves AI conversations as searchable markdown files. Prevents losing important a
 
 ## How It Works
 
-**MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `store_session` and `get_session` tools.
+**MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `codearchitect_help`, `store_session`, and `get_session` tools.
 
-**Storage:** Sessions saved to `.codearchitect/sessions/YYYY-MM-DD/` in your project root.
+**Storage:** Sessions saved to `.codearchitect/sessions/YYYY-MM-DD/topic-folder/` in your project root. Each session has `summary.md` and `full.md` files.
 
-**Topic Extraction:** Auto-extracts topics from conversation (or use explicit topic parameter).
+**Topic Extraction:** Auto-extracts topics from conversation (or use explicit topic parameter). Redundant suffixes like "-summary" are automatically removed.
 
 **Token Optimization:** `get_session` supports TOON format for ~40% token reduction when sending to LLMs.
 
 ## Usage
 
+**Get Help (Start Here!):**
+Just ask your AI: `use codearchitect`
+
 **Store Session:**
-Just ask your AI: "Store this conversation about [topic]"
+- `use codearchitect store_session` - Save current conversation
+- `use codearchitect store_session "authentication implementation"` - Save with topic
 
 **Get Session:**
-- "Get session [filename]" - Retrieve specific session
-- "List all sessions" - List all stored sessions
-- "List sessions from 2025-01-15" - Filter by date
+- `use codearchitect get_session` - List all sessions
+- `use codearchitect get_session authentication-implementation` - Get specific session by folder name
+- `use codearchitect get_session 2025-11-18` - List sessions from date
 
 **Parameters:**
+- `codearchitect_help`: `feature` (optional) - Get help for all features or specific feature
 - `store_session`: `conversation` (required), `topic` (optional), `format` ("plain" or "messages"), `sessionsDir` (optional)
 - `get_session`: `filename` (optional), `date` (optional), `format` ("json", "toon", or "auto"), `limit` (optional), `sessionsDir` (optional)
 
 ## Where Are Sessions Stored?
 
-Default: `<project-root>/.codearchitect/sessions/YYYY-MM-DD/`
+Default: `<project-root>/.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
+
+**Structure:**
+```
+.codearchitect/sessions/
+└── YYYY-MM-DD/
+    └── topic-folder-name/
+        ├── summary.md    # Quick summary + key points
+        └── full.md       # Complete conversation
+```
 
 **Custom location:** Set `CODEARCHITECT_SESSIONS_DIR` env var or use `sessionsDir` parameter.
 
 ## Finding Sessions
 
-Sessions are markdown files:
-- Browse: `.codearchitect/sessions/`
+Sessions are organized in topic-named folders:
+- Browse: `.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
 - Search: `grep -r "keyword" .codearchitect/sessions/`
 - Git: Commit sessions for version control
+- Use folder names: Sessions are stored by topic, making them easy to find
 
 ## Technical
 

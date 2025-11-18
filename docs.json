@@ -57,6 +57,7 @@
             "group": "API Documentation",
             "pages": [
               "api-reference/introduction",
+              "api-reference/codearchitect-help",
               "api-reference/store-session",
               "api-reference/get-session"
             ]

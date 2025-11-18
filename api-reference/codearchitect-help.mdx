@@ -1,0 +1,159 @@
+---
+title: "codearchitect_help"
+description: "Discover available CodeArchitect MCP features and get usage guidance"
+---
+
+Get help about CodeArchitect MCP features. This is the **easiest way to start** - just say `use codearchitect` and your AI assistant will show you everything available.
+
+## Parameters
+
+<ParamField body="feature" type="string">
+Optional. Specific feature name to get help for (`store_session`, `get_session`). If not provided, returns help for all features.
+</ParamField>
+
+## Response
+
+### Success
+
+<ResponseField name="success" type="boolean" required>
+Always `true`.
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+Help message title.
+</ResponseField>
+
+<ResponseField name="usage_pattern" type="string" required>
+Usage pattern explanation.
+</ResponseField>
+
+<ResponseField name="features" type="array" required>
+Array of feature objects with name, description, usage, examples, when_to_use, and details.
+</ResponseField>
+
+<ResponseField name="features[].name" type="string" required>
+Feature name (e.g., `store_session`).
+</ResponseField>
+
+<ResponseField name="features[].description" type="string" required>
+Brief feature description.
+</ResponseField>
+
+<ResponseField name="features[].usage" type="string" required>
+Usage pattern (e.g., `use codearchitect store_session [topic]`).
+</ResponseField>
+
+<ResponseField name="features[].examples" type="string[]" required>
+Array of example prompts.
+</ResponseField>
+
+<ResponseField name="features[].when_to_use" type="string[]" required>
+Array of use case descriptions.
+</ResponseField>
+
+<ResponseField name="features[].details" type="string" required>
+Detailed explanation and next steps.
+</ResponseField>
+
+## Examples
+
+### Get Help for All Features
+
+<RequestExample>
+```
+use codearchitect
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "message": "CodeArchitect MCP - Available Features",
+  "usage_pattern": "Say \"use codearchitect [feature_name]\" or just \"use codearchitect\" to see options",
+  "features": [
+    {
+      "name": "store_session",
+      "description": "Save important conversations for future reference",
+      "usage": "use codearchitect store_session [topic]",
+      "examples": [
+        "use codearchitect store_session",
+        "use codearchitect store_session \"authentication implementation\""
+      ],
+      "when_to_use": [
+        "After important discussions",
+        "When solving complex problems",
+        "When documenting decisions"
+      ],
+      "details": "Saves the conversation as a markdown file organized by date. Mention a topic or location/path if needed. Next: Use get_session to retrieve saved conversations."
+    },
+    {
+      "name": "get_session",
+      "description": "Retrieve previous conversations to avoid re-explaining",
+      "usage": "use codearchitect get_session [filename] [date]",
+      "examples": [
+        "use codearchitect get_session",
+        "use codearchitect get_session authentication-implementation",
+        "use codearchitect get_session 2025-11-18"
+      ],
+      "when_to_use": [
+        "When you need context from a previous conversation",
+        "Before explaining something you already discussed",
+        "When continuing work on a previous topic"
+      ],
+      "details": "Retrieves stored sessions by filename or date. Lists all sessions if no parameters provided. Next: Use store_session to save new conversations."
+    }
+  ]
+}
+```
+</ResponseExample>
+
+### Get Help for Specific Feature
+
+<RequestExample>
+```
+use codearchitect store_session
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "success": true,
+  "message": "CodeArchitect MCP - store_session Feature",
+  "usage_pattern": "Say \"use codearchitect store_session [topic]\"",
+  "features": [
+    {
+      "name": "store_session",
+      "description": "Save important conversations for future reference",
+      "usage": "use codearchitect store_session [topic]",
+      "examples": [
+        "use codearchitect store_session",
+        "use codearchitect store_session \"authentication implementation\""
+      ],
+      "when_to_use": [
+        "After important discussions",
+        "When solving complex problems",
+        "When documenting decisions"
+      ],
+      "details": "Saves the conversation as a markdown file organized by date. Mention a topic or location/path if needed. Next: Use get_session to retrieve saved conversations."
+    }
+  ]
+}
+```
+</ResponseExample>
+
+## Usage Tips
+
+- **Start here**: Just say `use codearchitect` to see all available features
+- **No memorization needed**: The help tool shows you exactly what to say
+- **Context-aware**: Your AI assistant will guide you through the process
+- **Feature-specific help**: Ask for help on a specific feature to get detailed guidance
+
+## When to Use
+
+- **First time users**: Discover what CodeArchitect can do
+- **Forgot a command**: Quick reference for usage patterns
+- **Exploring features**: See examples and use cases for each feature
+- **Onboarding**: Perfect for getting started with CodeArchitect MCP
+

@@ -1,9 +1,9 @@
 ---
 title: "store_session"
-description: "Store AI conversation sessions as organized markdown files"
+description: "Store AI conversation sessions as organized markdown files in topic-named folders"
 ---
 
-Store AI conversation sessions as organized markdown files in `.codearchitect/sessions/`.
+Store AI conversation sessions as organized markdown files in `.codearchitect/sessions/`. Creates a topic-named folder with `summary.md` and `full.md` files for better organization.
 
 ## Parameters
 
@@ -31,12 +31,16 @@ Optional custom directory. Overrides `CODEARCHITECT_SESSIONS_DIR` env var.
 Always `true`.
 </ResponseField>
 
-<ResponseField name="file" type="string" required>
-Full path to saved markdown file.
+<ResponseField name="summaryFile" type="string" required>
+Full path to `summary.md` file in topic folder.
+</ResponseField>
+
+<ResponseField name="fullFile" type="string" required>
+Full path to `full.md` file in topic folder.
 </ResponseField>
 
 <ResponseField name="filename" type="string" required>
-Filename (e.g., `session-20251111-143022-topic.md`).
+Topic folder name (e.g., `authentication-implementation`).
 </ResponseField>
 
 <ResponseField name="topic" type="string" required>
@@ -48,11 +52,7 @@ ISO date string.
 </ResponseField>
 
 <ResponseField name="message" type="string" required>
-Success message.
-</ResponseField>
-
-<ResponseField name="warning" type="string">
-Optional warning (e.g., "Conversation truncated to 1MB").
+Success message indicating folder location.
 </ResponseField>
 
 ### Error
@@ -96,20 +96,42 @@ Human-readable error message.
 ```json Success
 {
   "success": true,
-  "file": "/path/.codearchitect/sessions/2025-01-15/session-20250115-143022-authentication-implementation.md",
-  "filename": "session-20250115-143022-authentication-implementation.md",
+  "summaryFile": "/path/.codearchitect/sessions/2025-11-18/authentication-implementation/summary.md",
+  "fullFile": "/path/.codearchitect/sessions/2025-11-18/authentication-implementation/full.md",
+  "filename": "authentication-implementation",
   "topic": "authentication-implementation",
-  "date": "2025-01-15T14:30:22.123Z",
-  "message": "Session saved to session-20250115-143022-authentication-implementation.md"
+  "date": "2025-11-18T14:30:22.123Z",
+  "message": "Session saved in folder authentication-implementation: summary.md and full.md"
 }
 ```
 </ResponseExample>
 
+## Storage Structure
+
+Sessions are stored in topic-named folders with two files:
+
+```
+.codearchitect/sessions/
+└── YYYY-MM-DD/
+    └── topic-folder-name/
+        ├── summary.md    # Short summary + detailed request/response pairs
+        └── full.md       # Complete JSON messages + human-readable format
+```
+
+**Folder naming:**
+- Topic-based folder names (e.g., `authentication-implementation`)
+- Redundant suffixes automatically removed (`-summary`, `-session`, `-conversation`, `-chat`)
+- Auto-numbered if folder name collision occurs
+
+**Files:**
+- `summary.md`: Quick summary with key points and detailed request/response pairs
+- `full.md`: Complete conversation as JSON (TOON-optimized) + human-readable format
+
 ## Limits
 
 - **Conversation size**: Max 10MB (truncated to 1MB)
-- **Topic length**: Max 100 chars (50 in filename)
-- **File collisions**: Auto-numbered up to 1000 attempts
+- **Topic length**: Max 100 chars (folder name sanitized)
+- **Folder collisions**: Auto-numbered up to 1000 attempts
 
 ## Storage Priority
 
