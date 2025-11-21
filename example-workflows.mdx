@@ -7,7 +7,7 @@ description: "Real-world examples and workflows for using CodeArchitect MCP"
 
 **First time?** Just ask:
 
-```
+```bash
 use codearchitect
 ```
 
@@ -18,12 +18,12 @@ This shows you all available features and how to use them. No memorization neede
 **Step 1:** Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
 
 **Step 2:** Say:
-```
+```bash
 use codearchitect store_session
 ```
 
 Or with explicit topic:
-```
+```bash
 use codearchitect store_session topic: "microservices architecture design"
 ```
 
@@ -41,7 +41,7 @@ Saves architecture decisions, trade-offs, and technology choices in a readable f
 **Step 1:** Export chat to `~/.codearchitect/exports/`
 
 **Step 2:**
-```
+```bash
 use codearchitect store_session topic: "authentication code review"
 ```
 
@@ -52,7 +52,7 @@ Documents review feedback, improvements, and best practices.
 **Step 1:** Export chat to `~/.codearchitect/exports/`
 
 **Step 2:**
-```
+```bash
 use codearchitect store_session topic: "database performance debugging"
 ```
 
@@ -63,7 +63,7 @@ Builds a troubleshooting knowledge base for future reference.
 **Step 1:** Export chat to `~/.codearchitect/exports/`
 
 **Step 2:**
-```
+```bash
 use codearchitect store_session topic: "ADR: Choosing PostgreSQL over MongoDB"
 ```
 
@@ -74,7 +74,7 @@ Tracks decision context, options, rationale, and consequences.
 **Step 1:** Export chat to `~/.codearchitect/exports/`
 
 **Step 2:**
-```
+```bash
 use codearchitect store_session topic: "CI/CD pipeline setup"
 ```
 
@@ -85,7 +85,7 @@ Captures setup steps, configuration, and troubleshooting tips.
 **Step 1:** Export chat to `~/.codearchitect/exports/`
 
 **Step 2:**
-```
+```bash
 use codearchitect store_session topic: "GraphQL API implementation"
 ```
 
@@ -93,7 +93,7 @@ use codearchitect store_session topic: "GraphQL API implementation"
 
 ### Get Help First
 
-```
+```bash
 use codearchitect get_session
 ```
 
@@ -101,7 +101,7 @@ Shows you how to retrieve sessions and lists available options.
 
 ### Get Specific Session
 
-```
+```bash
 use codearchitect get_session authentication-implementation
 ```
 
@@ -109,7 +109,7 @@ Retrieves a specific session by folder name with optimized format for LLM consum
 
 ### List Recent Sessions
 
-```
+```bash
 use codearchitect get_session 2025-11-18
 ```
 
@@ -117,7 +117,7 @@ Lists all sessions from a specific date, useful for reviewing daily work.
 
 ### List All Sessions
 
-```
+```bash
 use codearchitect get_session
 ```
 
@@ -125,7 +125,7 @@ Lists all available sessions across all dates.
 
 ### Review Architecture Decisions
 
-```
+```bash
 use codearchitect get_session microservices-architecture-design
 ```
 
@@ -160,7 +160,7 @@ Sessions are organized in readable topic folders:
 
 The `get_session` tool automatically uses TOON format when retrieving sessions, providing ~40% token reduction when sending to LLMs:
 
-```
+```bash
 use codearchitect get_session authentication-implementation
 ```
 

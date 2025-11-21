@@ -16,11 +16,11 @@ Discover available features and get usage guidance. **Start here!**
 - Feature-specific help available
 
 **Usage:**
-```
+```bash
 use codearchitect
 ```
 
-```
+```bash
 use codearchitect store_session
 ```
 
@@ -41,16 +41,16 @@ Save AI conversation sessions as organized markdown files in topic-named folders
 - Optional project folder save with `projectDir` parameter
 
 **Usage:**
-```
+```bash
 # Recommended: Export chat first, then:
 use codearchitect store_session
 ```
 
-```
+```bash
 use codearchitect store_session topic: "authentication implementation"
 ```
 
-```
+```bash
 use codearchitect store_session exportFilename: "resolve_mcp"
 ```
 
@@ -69,15 +69,15 @@ Retrieve stored AI conversation sessions with TOON format support.
 - Handles both folder-based (v0.1.5+) and legacy flat-file formats
 
 **Usage:**
-```
+```bash
 use codearchitect get_session
 ```
 
-```
+```bash
 use codearchitect get_session authentication-implementation
 ```
 
-```
+```bash
 use codearchitect get_session 2025-11-18
 ```
 

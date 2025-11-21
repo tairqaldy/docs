@@ -5,7 +5,7 @@ description: "Install CodeArchitect MCP and configure it for your coding agent"
 
 ## Prerequisites
 
-- **Node.js** v18+ and **npm**
+- Node.js v18+ and npm
 - An IDE with MCP support
 
 ## Install
@@ -19,37 +19,28 @@ npm install -g codearchitect-mcp
 <Tabs>
 <Tab title="Cursor">
 
-**1. Open Cursor Settings**
+### Method 1: Using Cursor Settings UI
 
 1. Open Cursor (the code editor)
-2. Look at the bottom left corner - click the **gear icon** ⚙️ (or press `Ctrl+,` on Windows/Linux, `Cmd+,` on Mac)
-3. This opens Settings
-
-**2. Find MCP Settings**
-
-1. In the Settings search box at the top, type: **"MCP"** or **"Model Context Protocol"**
-2. You should see **"Tools & MCP"** section
-3. Click on it
-
-**3. Add CodeArchitect Server**
-
-1. Look for **"MCP Servers"** or **"Add Server"** button
-2. Click **"Add Server"** or the **+** button
-3. A form will appear. Fill it in:
-   - **Name**: `codearchitect` (or any name you like)
+2. Click the gear icon ⚙️ in the bottom left corner (or press `Ctrl+,` on Windows/Linux, `Cmd+,` on Mac)
+3. In Settings search box, type: "MCP" or "Model Context Protocol"
+4. Click on "Tools & MCP" section
+5. Click "Add Server" or the + button
+6. Fill in the form:
+   - **Name**: `codearchitect`
    - **Command**: `npx`
    - **Args**: `-y codearchitect-mcp@latest`
-4. Click **Save** or **OK**
+7. Click Save or OK
 
-**OR** (Alternative Method - Manual Config File):
+### Method 2: Manual Config File
 
 1. Close Cursor
-2. Open File Explorer (Windows) or Finder (Mac)
-3. Go to your home folder:
-   - **Windows**: `C:\Users\YourName\.cursor\` (create `.cursor` folder if it doesn't exist)
-   - **Mac/Linux**: `~/.cursor/` (create `.cursor` folder if it doesn't exist)
-4. Create a file named `mcp.json` in that folder
-5. Open it in any text editor and paste this:
+2. Navigate to your home folder:
+   - **Windows**: `C:\Users\YourName\.cursor\` (create `.cursor` folder if needed)
+   - **Mac/Linux**: `~/.cursor/` (create `.cursor` folder if needed)
+3. Create a file named `mcp.json` in that folder
+4. Open it in a text editor and paste:
+
 ```json
 {
   "mcpServers": {
@@ -60,113 +51,70 @@ npm install -g codearchitect-mcp
   }
 }
 ```
-6. Save the file
-7. Open Cursor again
 
-**4. Verify It's Working**
+5. Save the file and open Cursor again
 
-1. In Cursor, look at the bottom status bar
-2. You should see **"MCP"** or **"codearchitect"** with a green dot (connected)
-3. If you see red or yellow, something went wrong - see troubleshooting below
+### Verify Setup
 
-**5. Reload Cursor**
+1. Check the bottom status bar - you should see "MCP" or "codearchitect" with a green dot (connected)
+2. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
+3. Type "Reload Window" and press Enter
+4. Open any chat/conversation in Cursor
+5. Type: `use codearchitect`
+6. You should see a list of features and workflow guide
 
-1. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
-2. Type: **"Reload Window"**
-3. Press Enter
-4. Cursor will restart - wait for it to finish loading
+### Export Chat
 
-**6. Test It Works**
+To save conversations:
 
-1. Open any chat/conversation in Cursor
-2. Type: **"use codearchitect"**
-3. You should see a list of features and workflow guide
-
-**Export Chat (How to Save Conversations):**
-
-1. In Cursor chat, look at the top right corner
-2. Click the **three dots** menu (⋯)
-3. Click **"Export Chat"**
-4. A save dialog appears
-5. Navigate to: `C:\Users\YourName\.codearchitect\exports\` (Windows) or `~/.codearchitect/exports/` (Mac/Linux)
+1. In Cursor chat, click the three dots menu (⋯) in the top right corner
+2. Click "Export Chat"
+3. Navigate to: `C:\Users\YourName\.codearchitect\exports\` (Windows) or `~/.codearchitect/exports/` (Mac/Linux)
    - Create the `exports` folder if it doesn't exist
-6. Click **Save**
-7. The file will be saved as `.md` format (that's normal)
+4. Click Save (file will be saved as `.md` format)
 
 </Tab>
 
 <Tab title="VS Code">
 
-**1. Open Command Palette**
+### Setup Steps
 
 1. Open VS Code (Visual Studio Code)
+2. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac) to open Command Palette
+3. Type "MCP: Add Server" and select it
+4. Choose "Download with npm package"
+5. Enter package name: `codearchitect-mcp`
+6. Press Enter and wait for installation
+
+### Verify Setup
+
+1. Check the bottom right corner - you should see "MCP" or "codearchitect" with a green indicator
 2. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
-3. A box appears at the top - this is the Command Palette
+3. Type "Developer: Reload Window" and press Enter
+4. Open any chat/conversation in VS Code
+5. Type: `use codearchitect`
+6. You should see a list of features and workflow guide
 
-**2. Add MCP Server**
+### Export Chat
 
-1. In the Command Palette box, type: **"MCP: Add Server"**
-2. You should see **"MCP: Add Server..."** appear in the list
-3. Click it (or press Enter)
-
-**3. Choose Installation Method**
-
-1. A menu appears asking how to install
-2. Choose: **"Download with npm package"** (click it)
-3. Another box appears asking for the package name
-
-**4. Enter Package Name**
-
-1. Type exactly: **`codearchitect-mcp`**
-2. Press Enter
-3. VS Code will download and install it (wait a few seconds)
-
-**5. Verify It's Working**
-
-1. Look at the bottom right corner of VS Code
-2. You should see **"MCP"** or **"codearchitect"** with a green indicator (connected)
-3. If you see red or an error, see troubleshooting below
-
-**6. Reload VS Code**
-
-1. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac) again
-2. Type: **"Developer: Reload Window"**
-3. Press Enter
-4. VS Code will restart - wait for it to finish
-
-**7. Test It Works**
-
-1. Open any chat/conversation in VS Code
-2. Type: **"use codearchitect"**
-3. You should see a list of features and workflow guide
-
-**Export Chat (How to Save Conversations):**
+To save conversations:
 
 1. In VS Code chat, press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
-2. Type: **"Export Chat"**
-3. Click **"Export Chat"** from the list
-4. A save dialog appears
-5. **IMPORTANT**: Name your file something meaningful, like:
-   - `auth-implementation.json`
-   - `database-design.json`
-   - `api-routes.json`
-   - (Use `.json` at the end - VS Code will add it automatically)
-6. Navigate to: `C:\Users\YourName\.codearchitect\exports\` (Windows) or `~/.codearchitect/exports/` (Mac/Linux)
+2. Type "Export Chat" and select it
+3. Name your file meaningfully (e.g., `auth-implementation.json`, `database-design.json`)
+4. Navigate to: `C:\Users\YourName\.codearchitect\exports\` (Windows) or `~/.codearchitect/exports/` (Mac/Linux)
    - Create the `exports` folder if it doesn't exist
-7. Click **Save**
-8. The file will be saved as `.json` format (that's normal - CodeArchitect supports this!)
+5. Click Save (file will be saved as `.json` format - CodeArchitect supports this!)
 
 </Tab>
 
 <Tab title="Claude Desktop">
 
-**1. Open MCP Configuration**
+1. Open the configuration file:
+   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-Open the configuration file:
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-**2. Add CodeArchitect Configuration**
+2. Add CodeArchitect configuration:
 
 ```json
 {
@@ -179,33 +127,28 @@ Open the configuration file:
 }
 ```
 
-**3. Restart Claude Desktop**
+3. Restart Claude Desktop
 
 </Tab>
 
 <Tab title="Windsurf">
 
-**1. Open MCP Configuration**
+1. Go to **Settings → MCP Servers**
 
-Go to **Settings → MCP Servers**
+2. Add CodeArchitect configuration:
+   - **Name**: `codearchitect`
+   - **Command**: `npx`
+   - **Args**: `-y codearchitect-mcp@latest`
 
-**2. Add CodeArchitect Configuration**
-
-- **Name**: `codearchitect`
-- **Command**: `npx`
-- **Args**: `-y codearchitect-mcp@latest`
-
-**3. Save and restart** Windsurf
+3. Save and restart Windsurf
 
 </Tab>
 
 <Tab title="Continue.dev">
 
-**1. Open MCP Configuration**
+1. Go to **Settings → MCP Servers**
 
-Go to **Settings → MCP Servers**
-
-**2. Add CodeArchitect Configuration**
+2. Add CodeArchitect configuration:
 
 ```json
 {
@@ -218,23 +161,20 @@ Go to **Settings → MCP Servers**
 }
 ```
 
-**3. Reload Continue**
+3. Reload Continue
 
 </Tab>
 
 <Tab title="Cline">
 
-**1. Open MCP Configuration**
+1. Go to **Configuration → MCP Settings**
 
-Go to **Configuration → MCP Settings**
+2. Add CodeArchitect configuration:
+   - **Server ID**: `codearchitect`
+   - **Command**: `npx`
+   - **Args**: `-y codearchitect-mcp@latest`
 
-**2. Add CodeArchitect Configuration**
-
-- **Server ID**: `codearchitect`
-- **Command**: `npx`
-- **Args**: `-y codearchitect-mcp@latest`
-
-**3. Restart Cline**
+3. Restart Cline
 
 </Tab>
 </Tabs>
@@ -243,7 +183,7 @@ Go to **Configuration → MCP Settings**
 
 After configuration, test CodeArchitect MCP by asking your AI assistant:
 
-```
+```bash
 use codearchitect
 ```
 
