@@ -3,12 +3,18 @@ title: "store_session"
 description: "Store AI conversation sessions as organized markdown files in topic-named folders"
 ---
 
-Store AI conversation sessions as organized markdown files in `.codearchitect/sessions/`. Creates a topic-named folder with `summary.md` and `full.md` files for better organization.
+Store AI conversation sessions as organized markdown files in `~/.codearchitect/sessions/`. Creates a topic-named folder with `summary.md` and `full.md` files for better organization.
+
+**Recommended workflow:** Export chat from Cursor/VS Code to `~/.codearchitect/exports/`, then call `store_session` without parameters - it will auto-detect the export file.
 
 ## Parameters
 
-<ParamField body="conversation" type="string | Message[]" required>
-Conversation text or JSON array of messages. Required.
+<ParamField body="conversation" type="string | Message[]">
+Optional. Conversation text or JSON array of messages. If not provided, tool automatically looks for export file in `~/.codearchitect/exports/`.
+</ParamField>
+
+<ParamField body="exportFilename" type="string">
+Optional. Pattern to match specific export file (case-insensitive). Example: `"resolve_mcp"` matches `cursor_resolve_mcp_configuration_issues.md` or `auth-implementation.json`. If not provided, uses newest export file (modified in last 10 minutes).
 </ParamField>
 
 <ParamField body="topic" type="string">
@@ -19,8 +25,8 @@ Optional session topic. Auto-extracted if not provided.
 `"plain"` for text, `"messages"` for JSON array. Default: `"plain"`.
 </ParamField>
 
-<ParamField body="sessionsDir" type="string">
-Optional custom directory. Overrides `CODEARCHITECT_SESSIONS_DIR` env var.
+<ParamField body="projectDir" type="string">
+Optional. Project directory path. If specified, saves to BOTH main folder (`~/.codearchitect/sessions/`) AND project folder (`project/.codearchitect/sessions/`). Always saves to main folder first.
 </ParamField>
 
 ## Response
@@ -73,12 +79,44 @@ Human-readable error message.
 
 | Code | Description |
 |------|-------------|
+| `NO_CONVERSATION_OR_EXPORT` | No conversation provided and no recent export file found |
 | `INVALID_INPUT` | Missing or invalid conversation |
 | `FILE_WRITE_ERROR` | Cannot write file |
 | `DIRECTORY_CREATION_ERROR` | Cannot create directory |
 | `UNKNOWN_ERROR` | Unexpected error |
 
-## Example
+## Examples
+
+### Using Export File (Recommended)
+
+<RequestExample>
+```json
+{
+  "name": "store_session",
+  "arguments": {}
+}
+```
+</RequestExample>
+
+**Workflow:**
+1. Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
+2. Call `store_session` without parameters
+3. Tool auto-detects and processes export file
+
+### With Explicit Topic
+
+<RequestExample>
+```json
+{
+  "name": "store_session",
+  "arguments": {
+    "topic": "Authentication Implementation"
+  }
+}
+```
+</RequestExample>
+
+### With Direct Conversation
 
 <RequestExample>
 ```json
@@ -110,13 +148,19 @@ Human-readable error message.
 
 Sessions are stored in topic-named folders with two files:
 
+**Main location (always):** `~/.codearchitect/sessions/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
+
 ```
-.codearchitect/sessions/
+~/.codearchitect/sessions/
 └── YYYY-MM-DD/
     └── topic-folder-name/
         ├── summary.md    # Short summary + detailed request/response pairs
         └── full.md       # Complete JSON messages + human-readable format
 ```
+
+**Optional project location:** `project/.codearchitect/sessions/` (if `projectDir` specified)
 
 **Folder naming:**
 - Topic-based folder names (e.g., `authentication-implementation`)
@@ -133,8 +177,16 @@ Sessions are stored in topic-named folders with two files:
 - **Topic length**: Max 100 chars (folder name sanitized)
 - **Folder collisions**: Auto-numbered up to 1000 attempts
 
-## Storage Priority
+## Storage Behavior
 
-1. Tool parameter (`sessionsDir`)
-2. Environment variable (`CODEARCHITECT_SESSIONS_DIR`)
-3. Default (`.codearchitect/sessions/` in project root)
+**Main folder (always):** `~/.codearchitect/sessions/`
+- Always saves here regardless of other settings
+- Reliable location that works across all projects
+
+**Project folder (optional):** `project/.codearchitect/sessions/`
+- Only if `projectDir` parameter is explicitly provided
+- Saves to both main folder AND project folder
+
+**Export detection:** `~/.codearchitect/exports/`
+- Tool automatically looks here for export files
+- Supports both Cursor (`.md`) and VS Code (`.json`) formats

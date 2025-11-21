@@ -13,16 +13,24 @@ use codearchitect
 
 This shows you all available features and how to use them. No memorization needed!
 
-## System Design
+## System Design (Recommended Workflow)
 
+**Step 1:** Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
+
+**Step 2:** Say:
 ```
-use codearchitect store_session "microservices architecture design"
+use codearchitect store_session
+```
+
+Or with explicit topic:
+```
+use codearchitect store_session topic: "microservices architecture design"
 ```
 
 Saves architecture decisions, trade-offs, and technology choices in a readable folder structure:
 
 ```
-.codearchitect/sessions/2025-11-18/
+~/.codearchitect/sessions/2025-11-18/
 └── microservices-architecture-design/
     ├── summary.md    # Quick overview + key decisions
     └── full.md       # Complete conversation
@@ -30,40 +38,55 @@ Saves architecture decisions, trade-offs, and technology choices in a readable f
 
 ## Code Review
 
+**Step 1:** Export chat to `~/.codearchitect/exports/`
+
+**Step 2:**
 ```
-use codearchitect store_session "authentication code review"
+use codearchitect store_session topic: "authentication code review"
 ```
 
 Documents review feedback, improvements, and best practices.
 
 ## Debugging
 
+**Step 1:** Export chat to `~/.codearchitect/exports/`
+
+**Step 2:**
 ```
-use codearchitect store_session "database performance debugging"
+use codearchitect store_session topic: "database performance debugging"
 ```
 
 Builds a troubleshooting knowledge base for future reference.
 
 ## Architecture Decisions
 
+**Step 1:** Export chat to `~/.codearchitect/exports/`
+
+**Step 2:**
 ```
-use codearchitect store_session "ADR: Choosing PostgreSQL over MongoDB"
+use codearchitect store_session topic: "ADR: Choosing PostgreSQL over MongoDB"
 ```
 
 Tracks decision context, options, rationale, and consequences.
 
 ## Development Workflow
 
+**Step 1:** Export chat to `~/.codearchitect/exports/`
+
+**Step 2:**
 ```
-use codearchitect store_session "CI/CD pipeline setup"
+use codearchitect store_session topic: "CI/CD pipeline setup"
 ```
 
 Captures setup steps, configuration, and troubleshooting tips.
 
 ## Team Knowledge Sharing
 
+**Step 1:** Export chat to `~/.codearchitect/exports/`
+
+**Step 2:**
 ```
-use codearchitect store_session "GraphQL API implementation"
+use codearchitect store_session topic: "GraphQL API implementation"
 ```
 
 ## Retrieving Sessions
@@ -112,21 +135,26 @@ Retrieves stored architecture discussions for reference during design work.
 
 Sessions are organized in readable topic folders:
 
+**Main location:** `~/.codearchitect/sessions/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
+
 ```
-your-project/
-└── .codearchitect/
-    └── sessions/
-        └── 2025-11-18/
-            ├── authentication-implementation/
-            │   ├── summary.md    # Quick summary + key points
-            │   └── full.md       # Complete conversation (JSON + readable)
-            ├── database-migration/
-            │   ├── summary.md
-            │   └── full.md
-            └── microservices-architecture-design/
-                ├── summary.md
-                └── full.md
+~/.codearchitect/sessions/
+└── 2025-11-18/
+    ├── authentication-implementation/
+    │   ├── summary.md    # Quick summary + key points
+    │   └── full.md       # Complete conversation (JSON + readable)
+    ├── database-migration/
+    │   ├── summary.md
+    │   └── full.md
+    └── microservices-architecture-design/
+        ├── summary.md
+        └── full.md
 ```
+
+**Export folder:** `~/.codearchitect/exports/`
+- Export chats here for automatic detection
 
 ## Token Optimization
 

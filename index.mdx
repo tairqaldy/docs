@@ -31,14 +31,19 @@ This will show you all available features and how to use them. **That's it!** No
 use codearchitect
 ```
 
-**Save a conversation:**
-```
-use codearchitect store_session
-```
+**Save a conversation (recommended workflow):**
+1. Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
+2. Say: `use codearchitect store_session`
+3. Tool auto-detects export file and saves it
 
 **Save with a specific topic:**
 ```
-use codearchitect store_session "authentication implementation"
+use codearchitect store_session topic: "authentication implementation"
+```
+
+**Save to project folder too:**
+```
+use codearchitect store_session projectDir: "/path/to/project"
 ```
 
 **Retrieve a saved session:**
@@ -51,21 +56,31 @@ use codearchitect get_session
 use codearchitect get_session authentication-implementation
 ```
 
+### Storage Locations
+
+**Main location (always):** `~/.codearchitect/sessions/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
+
+**Export folder (for auto-detection):** `~/.codearchitect/exports/`
+- Export chats here for automatic detection
+
+**Optional project folder:** `project/.codearchitect/sessions/`
+- Only if `projectDir` parameter is specified
+
 ### Folder Structure
 
 Sessions are automatically organized in readable folders:
 
 ```
-your-project/
-└── .codearchitect/
-    └── sessions/
-        └── 2025-11-18/
-            ├── authentication-implementation/
-            │   ├── summary.md          # Quick summary + key points
-            │   └── full.md             # Complete conversation
-            └── database-migration/
-                ├── summary.md
-                └── full.md
+~/.codearchitect/sessions/
+└── 2025-11-18/
+    ├── authentication-implementation/
+    │   ├── summary.md          # Quick summary + key points
+    │   └── full.md             # Complete conversation
+    └── database-migration/
+        ├── summary.md
+        └── full.md
 ```
 
 ## Why CodeArchitect MCP?
@@ -119,14 +134,18 @@ Your AI assistant will show you everything you can do!
 </Step>
 </Steps>
 
-## Current Features (v0.1.5)
+## Current Features (v0.1.7)
 
 - ✅ **`codearchitect_help`** - Discover available features with `use codearchitect`
 - ✅ **Session Storage** - Save AI conversations in topic-named folders (summary.md + full.md)
 - ✅ **Session Retrieval** - Get and list stored sessions with TOON format support (~40% token reduction)
 - ✅ **Auto-Organization** - Organized by date in readable topic folders
 - ✅ **Smart Topics** - Extracts topics from conversations with redundant suffix removal
-- ✅ **Zero Configuration** - Auto-detects project roots
+- ✅ **Automatic Export Detection** - Auto-detects Cursor/VS Code export files from `~/.codearchitect/exports/`
+- ✅ **VS Code JSON Support** - Full support for VS Code's JSON export format
+- ✅ **Export Filename Matching** - Match specific export files by pattern
+- ✅ **Reliable Storage** - Always saves to `~/.codearchitect/sessions/` (home directory)
+- ✅ **Optional Project Save** - Optionally save to project folder with `projectDir` parameter
 - ✅ **Token Optimization** - TOON format reduces token usage by ~40% for LLM interactions
 
 ## Roadmap

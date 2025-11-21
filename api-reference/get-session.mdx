@@ -23,10 +23,6 @@ Output format: `"json"` for JSON, `"toon"` for TOON format (~40% token reduction
 Optional. Limit number of sessions returned when listing. Default: no limit.
 </ParamField>
 
-<ParamField body="sessionsDir" type="string">
-Optional custom directory. Overrides `CODEARCHITECT_SESSIONS_DIR` env var.
-</ParamField>
-
 ## Response
 
 ### Get Specific Session
@@ -237,9 +233,10 @@ The `get_session` tool supports **TOON (Token-Oriented Object Notation)** format
 - System automatically handles both old flat-file format and new folder-based format
 - Old sessions are still accessible and will be listed correctly
 
-## Storage Priority
+## Storage Location
 
-1. Tool parameter (`sessionsDir`)
-2. Environment variable (`CODEARCHITECT_SESSIONS_DIR`)
-3. Default (`.codearchitect/sessions/` in project root)
+**Always retrieves from:** `~/.codearchitect/sessions/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
+- No project detection - all sessions are in main folder
 

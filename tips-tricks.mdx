@@ -5,27 +5,29 @@ description: "Advanced tips and best practices for using CodeArchitect MCP effec
 
 ## Best Practices
 
+**Use the export file workflow (recommended):**
+1. Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
+2. Say: `use codearchitect store_session`
+3. Tool auto-detects and processes the export file
+
 **Use descriptive topics:**
 ```
-Store this session with topic "Database Migration Strategy"
+use codearchitect store_session topic: "Database Migration Strategy"
 ```
 
-**Per-project configuration:**
-```json
-{
-  "mcpServers": {
-    "codearchitect": {
-      "command": "codearchitect-mcp",
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
-      }
-    }
-  }
-}
+**Save to project folder too:**
 ```
+use codearchitect store_session projectDir: "/path/to/project"
+```
+This saves to both main folder (`~/.codearchitect/sessions/`) AND project folder.
 
 **Version control sessions:**
+```bash
+git add ~/.codearchitect/sessions/
+git commit -m "Add architecture discussion sessions"
+```
+
+Or if using project folder:
 ```bash
 git add .codearchitect/sessions/
 git commit -m "Add architecture discussion sessions"
@@ -34,23 +36,30 @@ git commit -m "Add architecture discussion sessions"
 ## Search Sessions
 
 ```bash
-# Search by content
-grep -r "authentication" .codearchitect/sessions/
+# Search by content (main location)
+grep -r "authentication" ~/.codearchitect/sessions/
 
 # Find by date
-find .codearchitect/sessions/2025-11-* -name "*.md"
+find ~/.codearchitect/sessions/2025-11-* -name "*.md"
+
+# Windows PowerShell
+Select-String -Path "$env:USERPROFILE\.codearchitect\sessions\**\*.md" -Pattern "authentication"
 ```
 
-## Custom Storage
+## Storage Locations
 
-Set global location via environment variable:
-```json
-{
-  "env": {
-    "CODEARCHITECT_SESSIONS_DIR": "/Users/YourName/Documents/ai-sessions"
-  }
-}
-```
+**Main location (always):** `~/.codearchitect/sessions/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
+- Sessions are always saved here for reliability
+
+**Export folder:** `~/.codearchitect/exports/`
+- Export chats here for automatic detection
+- Supports both Cursor (`.md`) and VS Code (`.json`) formats
+
+**Optional project folder:** `project/.codearchitect/sessions/`
+- Only if `projectDir` parameter is specified
+- Saves to both main folder AND project folder
 
 ## Topic Tips
 

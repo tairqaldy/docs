@@ -17,7 +17,9 @@ Saves AI conversations as searchable markdown files. Prevents losing important a
 
 **MCP Protocol:** AI assistants call tools via MCP. CodeArchitect MCP exposes `codearchitect_help`, `store_session`, and `get_session` tools.
 
-**Storage:** Sessions saved to `.codearchitect/sessions/YYYY-MM-DD/topic-folder/` in your project root. Each session has `summary.md` and `full.md` files.
+**Storage:** Sessions saved to `~/.codearchitect/sessions/YYYY-MM-DD/topic-folder/` in your home directory (always). Each session has `summary.md` and `full.md` files.
+
+**Export File Detection:** Automatically detects Cursor/VS Code export files from `~/.codearchitect/exports/`. Supports both Cursor (`.md`) and VS Code (`.json`) formats.
 
 **Topic Extraction:** Auto-extracts topics from conversation (or use explicit topic parameter). Redundant suffixes like "-summary" are automatically removed.
 
@@ -28,9 +30,11 @@ Saves AI conversations as searchable markdown files. Prevents losing important a
 **Get Help (Start Here!):**
 Just ask your AI: `use codearchitect`
 
-**Store Session:**
-- `use codearchitect store_session` - Save current conversation
-- `use codearchitect store_session "authentication implementation"` - Save with topic
+**Store Session (Recommended Workflow):**
+1. Export chat from Cursor/VS Code to `~/.codearchitect/exports/`
+2. `use codearchitect store_session` - Auto-detects export file and saves it
+3. Or: `use codearchitect store_session topic: "authentication implementation"` - Save with topic
+4. Or: `use codearchitect store_session exportFilename: "resolve_mcp"` - Match specific export file
 
 **Get Session:**
 - `use codearchitect get_session` - List all sessions
@@ -39,29 +43,37 @@ Just ask your AI: `use codearchitect`
 
 **Parameters:**
 - `codearchitect_help`: `feature` (optional) - Get help for all features or specific feature
-- `store_session`: `conversation` (required), `topic` (optional), `format` ("plain" or "messages"), `sessionsDir` (optional)
-- `get_session`: `filename` (optional), `date` (optional), `format` ("json", "toon", or "auto"), `limit` (optional), `sessionsDir` (optional)
+- `store_session`: `conversation` (optional - auto-detects export file), `exportFilename` (optional), `topic` (optional), `format` ("plain" or "messages"), `projectDir` (optional)
+- `get_session`: `filename` (optional), `date` (optional), `format` ("json", "toon", or "auto"), `limit` (optional)
 
 ## Where Are Sessions Stored?
 
-Default: `<project-root>/.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
+**Main location (always):** `~/.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
 
 **Structure:**
 ```
-.codearchitect/sessions/
+~/.codearchitect/sessions/
 └── YYYY-MM-DD/
     └── topic-folder-name/
         ├── summary.md    # Quick summary + key points
         └── full.md       # Complete conversation
 ```
 
-**Custom location:** Set `CODEARCHITECT_SESSIONS_DIR` env var or use `sessionsDir` parameter.
+**Export folder:** `~/.codearchitect/exports/`
+- Export chats here for automatic detection
+- Supports both Cursor (`.md`) and VS Code (`.json`) formats
+
+**Optional project location:** `project/.codearchitect/sessions/`
+- Only if `projectDir` parameter is explicitly provided
+- Saves to both main folder AND project folder
 
 ## Finding Sessions
 
 Sessions are organized in topic-named folders:
-- Browse: `.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
-- Search: `grep -r "keyword" .codearchitect/sessions/`
+- Browse: `~/.codearchitect/sessions/YYYY-MM-DD/topic-folder/`
+- Search: `grep -r "keyword" ~/.codearchitect/sessions/`
 - Git: Commit sessions for version control
 - Use folder names: Sessions are stored by topic, making them easy to find
 

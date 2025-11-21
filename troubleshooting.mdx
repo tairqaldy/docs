@@ -5,40 +5,49 @@ description: "Common issues and solutions for CodeArchitect MCP"
 
 ## Sessions saved in wrong location
 
-**Fix:** Use workspace-specific configuration in your project root:
+**Note:** Sessions are always saved to `~/.codearchitect/sessions/` (home directory). This is intentional and ensures reliable storage across all projects.
 
-```json .cursor/mcp.json
-{
-  "mcpServers": {
-    "codearchitect": {
-      "command": "codearchitect-mcp",
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "CODEARCHITECT_SESSIONS_DIR": "${workspaceFolder}/.codearchitect/sessions"
-      }
-    }
-  }
-}
-```
+**If you want to also save to project folder:**
+- Use `projectDir` parameter: `use codearchitect store_session projectDir: "/path/to/project"`
+- This saves to both main folder (`~/.codearchitect/sessions/`) AND project folder (`project/.codearchitect/sessions/`)
 
-Restart your IDE. Ensure project has a marker file (`package.json`, `.git`, etc.).
+**Main location:**
+- Windows: `C:\Users\YourName\.codearchitect\sessions\`
+- Linux/Mac: `~/.codearchitect/sessions/`
 
 ## Session files not being created
 
 **Check:**
-- Write permissions: `chmod -R u+w .codearchitect/` (Linux/Mac)
+- Write permissions: `chmod -R u+w ~/.codearchitect/` (Linux/Mac)
 - MCP server logs in IDE Output panel
-- Project root detection (`.codearchitect` folder should exist)
+- Main location exists: `~/.codearchitect/sessions/` (created automatically)
+- Export folder exists: `~/.codearchitect/exports/` (for auto-detection)
 
 ## MCP server not starting
 
 **Verify:**
 ```bash
-codearchitect-mcp --version  # Should show version
-node --version              # Should be v18+
+npx -y codearchitect-mcp@latest  # Should run without errors
+node --version                    # Should be v18+
 ```
 
-If missing, reinstall: `npm install -g codearchitect-mcp`
+**If using global install:**
+```bash
+codearchitect-mcp --version  # Should show version
+npm install -g codearchitect-mcp  # Reinstall if missing
+```
+
+**Recommended:** Use `npx` method (no global install needed):
+```json
+{
+  "mcpServers": {
+    "codearchitect": {
+      "command": "npx",
+      "args": ["-y", "codearchitect-mcp@latest"]
+    }
+  }
+}
+```
 
 ## Topic extraction issues
 
@@ -46,8 +55,8 @@ Provide explicit `topic` parameter. Topics are limited to 50 characters.
 
 ## Permission errors
 
-**Linux/Mac:** `chmod -R u+w .codearchitect/`  
-**Windows:** Check folder Properties → Security → Write permissions
+**Linux/Mac:** `chmod -R u+w ~/.codearchitect/`  
+**Windows:** Check folder Properties → Security → Write permissions for `C:\Users\YourName\.codearchitect\`
 
 ## Getting Help
 

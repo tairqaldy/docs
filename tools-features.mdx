@@ -3,7 +3,7 @@ title: "Tools & Features"
 description: "Explore all available tools and capabilities in CodeArchitect MCP"
 ---
 
-## Current Tools (v0.1.5)
+## Current Tools (v0.1.7)
 
 ### codearchitect_help
 
@@ -31,18 +31,27 @@ See [API Reference](/api-reference/codearchitect-help) for details.
 Save AI conversation sessions as organized markdown files in topic-named folders.
 
 **Features:**
-- Auto-organization by date (`.codearchitect/sessions/YYYY-MM-DD/topic-folder/`)
+- **Automatic export file detection** - Auto-detects Cursor/VS Code exports from `~/.codearchitect/exports/`
+- **VS Code JSON support** - Full support for VS Code's complex JSON export format
+- **Export filename matching** - Match specific export files by pattern
+- Auto-organization by date (`~/.codearchitect/sessions/YYYY-MM-DD/topic-folder/`)
 - Topic-named folders with `summary.md` and `full.md` files
 - Smart topic extraction with redundant suffix removal
-- Zero configuration (auto-detects project root)
+- Always saves to main folder (`~/.codearchitect/sessions/`)
+- Optional project folder save with `projectDir` parameter
 
 **Usage:**
 ```
+# Recommended: Export chat first, then:
 use codearchitect store_session
 ```
 
 ```
-use codearchitect store_session "authentication implementation"
+use codearchitect store_session topic: "authentication implementation"
+```
+
+```
+use codearchitect store_session exportFilename: "resolve_mcp"
 ```
 
 See [API Reference](/api-reference/store-session) for details.
